@@ -1,0 +1,9 @@
+.header {
+  font-weight: bold;
+  font-size: 40px;
+}
+.nav {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}

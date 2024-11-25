@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import { lazy, Suspense } from "react";
+import Navigation from "./components/Navigation/Navigation";
+import NotFoundPage from "./pages/NotFoundPage";
+import MovieCast from "./components/MovieCast/MovieCast";
+import MovieReviews from "./components/MovieReviews/MovieReviews";
+
+const Home = lazy(() => import("./pages/HomePage"));
+const MovieDetails = lazy(() => import("./pages/MovieDetailsPage"));
+const Movies = lazy(() => import("./pages/MoviesPage"));
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <Navigation />
+        <Suspense>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/movies" element={<Movies />} />
+            <Route path="/movies/:movieId" element={<MovieDetails />}>
+              <Route path="cast" element={<MovieCast />}></Route>
+              <Route path="reviews" element={<MovieReviews />}></Route>
+            </Route>
+
+            <Route path="*" element={<NotFoundPage />}></Route>
+          </Routes>
+        </Suspense>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
