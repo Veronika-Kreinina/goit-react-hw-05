@@ -1,34 +1,25 @@
-// import axios from "axios";
 import { useEffect, useState } from "react";
+import { fetchMovies } from "../api.js/api";
 import MovieList from "../components/MovieList/MovieList";
-import Loader from "../components/Loader/Loader";
-
-// export const getMovies = async () => {
-//   const { data } = await axios.get("");
-//   };
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
+    const getData = async () => {
       try {
-        const data = await getMovies();
+        const data = await fetchMovies();
         setMovies(data);
       } catch (error) {
         setError(error);
-      } finally {
-        setIsLoading(false);
       }
     };
-    fetchData();
+    getData();
   }, []);
   return (
     <div>
       <MovieList movies={movies} />
-      {isLoading && <Loader />}
       {error && <p>Something went wrong</p>}
     </div>
   );
