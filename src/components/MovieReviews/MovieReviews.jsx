@@ -4,7 +4,7 @@ import { fetchMoviesReview } from "../../api.js/api";
 
 const MovieReviews = () => {
   const { id } = useParams();
-  const [reviews, setReviews] = useState(null);
+  const [reviews, setReviews] = useState("");
   const [error, setError] = useState(null);
 
   useEffect(() => {

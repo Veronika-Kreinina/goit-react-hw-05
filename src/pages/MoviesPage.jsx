@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import MovieList from "../components/MovieList/MovieList";
 import { searchMovies } from "../api.js/api";
+import { useSearchParams } from "react-router-dom";
 
 const MoviesPage = () => {
-  const [query, setQuery] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get("query");
   const [error, setError] = useState(null);
   const [movies, setMovies] = useState([]);
 
@@ -24,7 +26,7 @@ const MoviesPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-    setQuery(form.elements.query.value.trim());
+    setSearchParams({ query: form.elements.query.value.trim() });
     form.reset();
   };
   return (
@@ -33,7 +35,7 @@ const MoviesPage = () => {
         <input type="text" name="query" placeholder="Type movie or cartoon" />
         <button>Search</button>
       </form>
-      <MovieList movies={movies} />
+      {movies.length !== 0 && <MovieList movies={movies} />}
       {error && <p>Something went wrong</p>}
     </div>
   );

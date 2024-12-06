@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 const MovieCast = () => {
   const { id } = useParams();
-  const [cast, setCast] = useState(null);
+  const [cast, setCast] = useState("");
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const MovieCast = () => {
 
   return (
     <div>
-      {error && <p>Error when get movie cast.</p>}
+      {error && <p>Dont see the movie cast.</p>}
       <ul>
         {cast.map(({ id, name, profile_path, character }) => (
           <li key={id}>

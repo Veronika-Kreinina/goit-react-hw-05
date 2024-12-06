@@ -1,17 +1,10 @@
-import { useEffect, useState } from "react";
-import {
-  NavLink,
-  Outlet,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import { fetchMoviesById } from "../api.js/api";
 
 const MovieDetailsPage = () => {
   const { id } = useParams();
   const location = useLocation();
-  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [details, setDetails] = useState(null);
 
@@ -21,15 +14,13 @@ const MovieDetailsPage = () => {
         const data = await fetchMoviesById(id);
         setDetails(data);
       } catch (error) {
-        setError(error.message);
+        setError(error);
       }
     };
     getData();
   }, [id]);
 
-  const handleGoBack = () => {
-    navigate(location.state?.from || "/movies");
-  };
+  const handleGoBack = useRef(location?.state ?? "/");
 
   return (
     <div>
