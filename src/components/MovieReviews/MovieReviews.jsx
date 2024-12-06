@@ -3,21 +3,21 @@ import { useParams } from "react-router-dom";
 import { fetchMoviesReview } from "../../api.js/api";
 
 const MovieReviews = () => {
-  const { id } = useParams();
-  const [reviews, setReviews] = useState("");
+  const { movieId } = useParams();
+  const [reviews, setReviews] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const data = await fetchMoviesReview(id);
+        const data = await fetchMoviesReview(movieId);
         setReviews(data || []);
       } catch (error) {
         setError(error);
       }
     };
     getData();
-  }, [id]);
+  }, [movieId]);
 
   return (
     <div>

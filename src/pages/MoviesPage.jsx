@@ -5,10 +5,10 @@ import { useSearchParams } from "react-router-dom";
 
 const MoviesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get("query");
+
   const [error, setError] = useState(null);
   const [movies, setMovies] = useState([]);
-
+  const query = searchParams.get("query");
   useEffect(() => {
     if (!query) return;
 
@@ -25,9 +25,8 @@ const MoviesPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const form = e.target;
-    setSearchParams({ query: form.elements.query.value.trim() });
-    form.reset();
+    setSearchParams({ query: e.currentTarget.elements.query.value });
+    e.currentTarget.reset();
   };
   return (
     <div>

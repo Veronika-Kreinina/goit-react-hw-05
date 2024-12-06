@@ -1,30 +1,36 @@
-import { useEffect, useRef, useState } from "react";
-import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useLocation,
+  useParams,
+} from "react-router-dom";
 import { fetchMoviesById } from "../api.js/api";
 
 const MovieDetailsPage = () => {
-  const { id } = useParams();
+  const { movieId } = useParams();
   const location = useLocation();
   const [error, setError] = useState(null);
   const [details, setDetails] = useState(null);
 
+  console.log(location);
+
   useEffect(() => {
     const getData = async () => {
       try {
-        const data = await fetchMoviesById(id);
+        const data = await fetchMoviesById(movieId);
         setDetails(data);
       } catch (error) {
         setError(error);
       }
     };
     getData();
-  }, [id]);
-
-  const handleGoBack = useRef(location?.state ?? "/");
+  }, [movieId]);
 
   return (
     <div>
-      <button onClick={handleGoBack}>Go back</button>
+      <Link to={location.state}>Go back</Link>
       {error && <p>Error loading movie details: {error}</p>}
       {details && (
         <>
@@ -33,12 +39,13 @@ const MovieDetailsPage = () => {
           <img
             src={`https://image.tmdb.org/t/p/w500${details.poster_path}`}
             alt={details.title}
+            width="200px"
           />
           <nav>
-            <NavLink to="cast" state={{ from: location.state?.from }}>
+            <NavLink to="cast" state={location.state}>
               Cast
             </NavLink>
-            <NavLink to="reviews" state={{ from: location.state?.from }}>
+            <NavLink to="reviews" state={location.state}>
               Reviews
             </NavLink>
           </nav>

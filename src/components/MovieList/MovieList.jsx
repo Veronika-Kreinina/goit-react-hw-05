@@ -7,7 +7,7 @@ const MovieList = ({ movies }) => {
       <ul>
         {movies.map(({ id, title, release_date }) => (
           <li key={id}>
-            <Link to={`movie/${id}`} state={location}>
+            <Link to={`movies/${id}`} state={location}>
               {title} | {release_date.slice(0, 4)}
             </Link>
           </li>

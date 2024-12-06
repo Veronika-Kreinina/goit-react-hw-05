@@ -3,21 +3,21 @@ import { fetchMoviesCast } from "../../api.js/api";
 import { useParams } from "react-router-dom";
 
 const MovieCast = () => {
-  const { id } = useParams();
-  const [cast, setCast] = useState("");
+  const { movieId } = useParams();
+  const [cast, setCast] = useState([]);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const data = await fetchMoviesCast(id);
+        const data = await fetchMoviesCast(movieId);
         setCast(data || []);
       } catch (error) {
         setError(error);
       }
     };
     getData();
-  }, [id]);
+  }, [movieId]);
 
   return (
     <div>
