@@ -25,12 +25,12 @@ export const fetchMoviesById = async (id) => {
 };
 
 export const fetchMoviesCast = async (id) => {
-  const { data } = await axios.get(`movie/${id}credits`, options);
+  const { data } = await axios.get(`movie/${id}/credits`, options);
   return data.cast;
 };
 
 export const fetchMoviesReview = async (id) => {
-  const { data } = await axios.get(`movie/${id}reviews`, options);
+  const { data } = await axios.get(`movie/${id}/reviews`, options);
   return data.results;
 };
 export const searchMovies = async (query) => {
